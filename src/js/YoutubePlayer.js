@@ -101,8 +101,6 @@ class YoutubePlayer extends Meister.PlayerPlugin {
     onIframeReady(event) {
         this.iframeReadyResolve();
 
-        console.log('test');
-
         this.heartbeat = new Heartbeat(0.2);
         this.heartbeat.beat(event => this.onHeartbeat(event));
 
@@ -114,6 +112,7 @@ class YoutubePlayer extends Meister.PlayerPlugin {
         this.on('requestBitrate', this.onRequestBitrate.bind(this));
 
         this.onResize();
+        this.meister.trigger('playerCreated');
     }
 
     onPlayerStateChange(event) {
@@ -169,6 +168,16 @@ class YoutubePlayer extends Meister.PlayerPlugin {
         if (document.webkitFullscreenElement) {
             width = window.screen.width;
             height = window.screen.height;
+            this.resetNormalModeAfterFullScreen = true;
+        } else if (this.resetNormalModeAfterFullScreen) {
+            width = this.beforeFullscreenWidth;
+            height = this.beforeFullscreenHeight;
+            this.resetNormalModeAfterFullScreen = false;
+        }
+
+        if (!document.webkitFullscreenElement) {
+            this.beforeFullscreenWidth = width;
+            this.beforeFullscreenHeight = height;
         }
 
         if (!this.player) return;

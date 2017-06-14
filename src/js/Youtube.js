@@ -15,8 +15,6 @@ class Youtube extends Meister.MediaPlugin {
         window.onYouTubePlayerAPIReady = () => {
             this.youtubeApiReadyResolve();
         };
-
-
     }
 
     static get pluginName() {
