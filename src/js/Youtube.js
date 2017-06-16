@@ -56,10 +56,29 @@ class Youtube extends Meister.MediaPlugin {
         this.player.currentSrc = item.src;
     }
 
+    get duration() {
+        if (!this.player) { return NaN; }
+
+        return this.player.duration;
+    }
+
+    get currentTime() {
+        if (!this.player) { return NaN; }
+
+        return this.player.currentTime;
+    }
+
+    set currentTime(time) {
+        if (!this.player) { return; }
+
+        this.player.currentTime = time;
+    }
+
+
     _onPlayerTimeUpdate() {
         this.meister.trigger('playerTimeUpdate', {
-            currentTime: this.meister.currentTime,
-            duration: this.meister.duration,
+            currentTime: this.player.currentTime,
+            duration: this.player.duration,
         });
     }
 
@@ -67,16 +86,16 @@ class Youtube extends Meister.MediaPlugin {
         let targetTime;
 
         if (!isNaN(e.relativePosition)) {
-            targetTime = e.relativePosition * this.meister.duration;
+            targetTime = e.relativePosition * this.player.duration;
         } else if (!isNaN(e.timeOffset)) {
-            targetTime = this.meister.currentTime + e.timeOffset;
+            targetTime = this.player.currentTime + e.timeOffset;
         }
 
         // Check whether we are allowed to seek forward.
-        if (this.blockSeekForward && targetTime > this.meister.currentTime) { return; }
+        if (this.blockSeekForward && targetTime > this.player.currentTime) { return; }
 
         if (Number.isFinite(targetTime)) {
-            this.meister.currentTime = targetTime;
+            this.player.currentTime = targetTime;
         }
     }
 }
