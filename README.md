@@ -13,5 +13,10 @@ var meisterPlayer = new Meister('#player', {
     Youtube: {},
     YoutubePlayer: {},
 });
+
+meisterPlayer.setItem({
+    src: '_FVgD5KJPyE', //Only youtube ID's are supported
+    type: 'youtube'
+});
 ```
 
