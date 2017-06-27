@@ -1,4 +1,5 @@
 import scriptLoader from 'promise-script-loader';
+import packageJson from '../../package.json';
 
 class Youtube extends Meister.MediaPlugin {
     constructor(config, meister) {
@@ -19,6 +20,10 @@ class Youtube extends Meister.MediaPlugin {
 
     static get pluginName() {
         return 'Youtube';
+    }
+
+    static get pluginVersion() {
+        return packageJson.version;
     }
 
     async isItemSupported(item) {
