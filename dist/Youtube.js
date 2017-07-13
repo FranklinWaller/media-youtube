@@ -333,8 +333,8 @@ var Youtube = function (_Meister$MediaPlugin) {
         key: '_onPlayerTimeUpdate',
         value: function _onPlayerTimeUpdate() {
             this.meister.trigger('playerTimeUpdate', {
-                currentTime: this.meister.currentTime,
-                duration: this.meister.duration
+                currentTime: this.player.currentTime,
+                duration: this.player.duration
             });
         }
     }, {
@@ -343,19 +343,44 @@ var Youtube = function (_Meister$MediaPlugin) {
             var targetTime = void 0;
 
             if (!isNaN(e.relativePosition)) {
-                targetTime = e.relativePosition * this.meister.duration;
+                targetTime = e.relativePosition * this.player.duration;
             } else if (!isNaN(e.timeOffset)) {
-                targetTime = this.meister.currentTime + e.timeOffset;
+                targetTime = this.player.currentTime + e.timeOffset;
             }
 
             // Check whether we are allowed to seek forward.
-            if (this.blockSeekForward && targetTime > this.meister.currentTime) {
+            if (this.blockSeekForward && targetTime > this.player.currentTime) {
                 return;
             }
 
             if (Number.isFinite(targetTime)) {
-                this.meister.currentTime = targetTime;
+                this.player.currentTime = targetTime;
             }
+        }
+    }, {
+        key: 'duration',
+        get: function get() {
+            if (!this.player) {
+                return NaN;
+            }
+
+            return this.player.duration;
+        }
+    }, {
+        key: 'currentTime',
+        get: function get() {
+            if (!this.player) {
+                return NaN;
+            }
+
+            return this.player.currentTime;
+        },
+        set: function set(time) {
+            if (!this.player) {
+                return;
+            }
+
+            this.player.currentTime = time;
         }
     }], [{
         key: 'pluginName',
@@ -750,7 +775,7 @@ function kbpsToQuality(kbps) {
 
 module.exports = {
 	"name": "@npm-wearetriple/meister-plugin-youtube",
-	"version": "5.1.0",
+	"version": "5.2.0",
 	"description": "Meister plugin for playing Youtube videos",
 	"main": "dist/Hls.js",
 	"keywords": [
@@ -774,6 +799,9 @@ module.exports = {
 		"babel-preset-es2015": "^6.24.0",
 		"babel-preset-es2017": "^6.22.0",
 		"gulp": "^3.9.1"
+	},
+	"peerDependencies": {
+		"@meisterplayer/meisterplayer": ">= 5.1.0"
 	}
 };
 
