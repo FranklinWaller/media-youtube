@@ -1,5 +1,5 @@
 {
-  "name": "@npm-wearetriple/meister-plugin-youtube",
+  "name": "@meisterplayer/plugin-youtube",
   "version": "5.2.0",
   "description": "Meister plugin for playing Youtube videos",
   "main": "dist/Hls.js",
