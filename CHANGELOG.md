@@ -1,3 +1,13 @@
+<a name="5.2.1"></a>
+## [5.2.1](https://github.com/meisterplayer/media-youtube/compare/v5.2.0...v5.2.1) (2017-08-09)
+
+
+### Bug Fixes
+
+* **name:** Change package to public version ([72914a3](https://github.com/meisterplayer/media-youtube/commit/72914a3))
+
+
+
 <a name="5.2.0"></a>
 # [5.2.0](https://github.com/meisterplayer/media-youtube/compare/v5.1.0...v5.2.0) (2017-07-13)
 

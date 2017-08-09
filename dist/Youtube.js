@@ -774,8 +774,8 @@ function kbpsToQuality(kbps) {
 /***/ (function(module, exports) {
 
 module.exports = {
-	"name": "@npm-wearetriple/meister-plugin-youtube",
-	"version": "5.2.0",
+	"name": "@meisterplayer/plugin-youtube",
+	"version": "5.2.1",
 	"description": "Meister plugin for playing Youtube videos",
 	"main": "dist/Hls.js",
 	"keywords": [
