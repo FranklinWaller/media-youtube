@@ -1,3 +1,13 @@
+<a name="5.2.2"></a>
+## [5.2.2](https://github.com/meisterplayer/media-youtube/compare/v5.2.1...v5.2.2) (2018-01-26)
+
+
+### Bug Fixes
+
+* **package:** Fix path to minified plugin ([4b52772](https://github.com/meisterplayer/media-youtube/commit/4b52772))
+
+
+
 <a name="5.2.1"></a>
 ## [5.2.1](https://github.com/meisterplayer/media-youtube/compare/v5.2.0...v5.2.1) (2017-08-09)
 
