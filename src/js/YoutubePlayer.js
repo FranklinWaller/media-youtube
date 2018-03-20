@@ -42,21 +42,19 @@ class YoutubePlayer extends Meister.PlayerPlugin {
     load(item) {
         super.load(item);
 
+        this.addStylesheet();
         this.mediaElement = document.createElement('div');
         this.mediaElement.id = Math.random().toString();
 
         this.wrapper.appendChild(this.mediaElement);
 
         this.player = new window.YT.Player(this.mediaElement.id, {
-            height: '360',
-            width: '640',
             events: {
                 onReady: this.onIframeReady.bind(this),
                 onStateChange: this.onPlayerStateChange.bind(this),
             },
             playerVars: {
                 controls: 0,
-                autoplay: 1,
                 modestbranding: 0,
                 rel: 0,
                 showinfo: 0,
@@ -70,6 +68,14 @@ class YoutubePlayer extends Meister.PlayerPlugin {
         });
 
         // this.meister.trigger('playerCreated');
+    }
+
+    addStylesheet() {
+        // We have to create a stylesheet because you can't inline style an iframe.
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = '.pf-player iframe{ width: 100% !important; height: 100% !important; }';
+        document.head.appendChild(style);
     }
 
     unload() {
@@ -156,7 +162,7 @@ class YoutubePlayer extends Meister.PlayerPlugin {
         this.player.setPlaybackQuality(quality);
     }
 
-    onHeartbeat(event) {
+    onHeartbeat() {
         this.playerTime = this.player.getCurrentTime();
         this.meister.trigger('_playerTimeUpdate');
     }
@@ -193,8 +199,10 @@ class YoutubePlayer extends Meister.PlayerPlugin {
         this.iframeReadyPromise.then(() => {
             if (url.startsWith('http')) {
                 console.error('Please insert a Youtube ID');
-            } else {
+            } else if (this.meister.config.autoplay) {
                 this.player.loadVideoById(url);
+            } else {
+                this.player.cueVideoById(url);
             }
         });
     }
