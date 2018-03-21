@@ -1,3 +1,8 @@
+<a name="5.2.3"></a>
+## [5.2.3](https://github.com/meisterplayer/media-youtube/compare/v5.2.2...v5.2.3) (2018-03-21)
+
+
+
 <a name="5.2.2"></a>
 ## [5.2.2](https://github.com/meisterplayer/media-youtube/compare/v5.2.1...v5.2.2) (2018-01-26)
 

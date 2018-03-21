@@ -478,21 +478,19 @@ var YoutubePlayer = function (_Meister$PlayerPlugin) {
 
             _get(YoutubePlayer.prototype.__proto__ || Object.getPrototypeOf(YoutubePlayer.prototype), 'load', this).call(this, item);
 
+            this.addStylesheet();
             this.mediaElement = document.createElement('div');
             this.mediaElement.id = Math.random().toString();
 
             this.wrapper.appendChild(this.mediaElement);
 
             this.player = new window.YT.Player(this.mediaElement.id, {
-                height: '360',
-                width: '640',
                 events: {
                     onReady: this.onIframeReady.bind(this),
                     onStateChange: this.onPlayerStateChange.bind(this)
                 },
                 playerVars: {
                     controls: 0,
-                    autoplay: 1,
                     modestbranding: 0,
                     rel: 0,
                     showinfo: 0
@@ -506,6 +504,15 @@ var YoutubePlayer = function (_Meister$PlayerPlugin) {
             });
 
             // this.meister.trigger('playerCreated');
+        }
+    }, {
+        key: 'addStylesheet',
+        value: function addStylesheet() {
+            // We have to create a stylesheet because you can't inline style an iframe.
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = '.pf-player iframe{ width: 100% !important; height: 100% !important; }';
+            document.head.appendChild(style);
         }
     }, {
         key: 'unload',
@@ -611,7 +618,7 @@ var YoutubePlayer = function (_Meister$PlayerPlugin) {
         }
     }, {
         key: 'onHeartbeat',
-        value: function onHeartbeat(event) {
+        value: function onHeartbeat() {
             this.playerTime = this.player.getCurrentTime();
             this.meister.trigger('_playerTimeUpdate');
         }
@@ -652,8 +659,10 @@ var YoutubePlayer = function (_Meister$PlayerPlugin) {
             this.iframeReadyPromise.then(function () {
                 if (url.startsWith('http')) {
                     console.error('Please insert a Youtube ID');
-                } else {
+                } else if (_this5.meister.config.autoplay) {
                     _this5.player.loadVideoById(url);
+                } else {
+                    _this5.player.cueVideoById(url);
                 }
             });
         }
@@ -775,7 +784,7 @@ function kbpsToQuality(kbps) {
 
 module.exports = {
 	"name": "@meisterplayer/plugin-youtube",
-	"version": "5.2.2",
+	"version": "5.2.3",
 	"description": "Meister plugin for playing Youtube videos",
 	"main": "dist/Youtube.js",
 	"keywords": [
